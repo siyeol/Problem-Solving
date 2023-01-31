@@ -27,11 +27,11 @@ def find(badge_records):
     no_exit = deque()
     no_enter = deque()
 
-    office = deque()
+    office = list()
 
     for name, trans in badge_records:
         if trans == 'exit':
-            if len(office):
+            if len(office)==0:
                 no_enter.append(name)
             else:
                 if name in office:
@@ -43,7 +43,9 @@ def find(badge_records):
             if name in office:
                 if name not in no_exit:
                     no_exit.append(name)
-        
+            else:
+                office.append(name)
+    
     for of in office:
         if of not in no_exit:
             no_exit.append(of)
