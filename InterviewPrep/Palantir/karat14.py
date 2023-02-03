@@ -1,15 +1,15 @@
 
 board3 = [
-    [  1,  0,  0, 0, 0 ],
+    [  0,  0,  0, 0, 0 ],
     [  0, -1, -1, 0, 0 ],
-    [  0, -1,  0, 1, 0 ],
+    [  0, -1,  0, 0, 0 ],
     [ -1,  0,  0, 0, 0 ],
-    [  0,  1, -1, 0, 0 ],
+    [  0,  -1, -1, 0, 0 ],
     [  0,  0,  0, 0, 0 ],
 ]
 
 start = (0, 0)
-end = (4, 1)
+end = (3, 1)
 
 from collections import deque
 
@@ -75,14 +75,14 @@ def find_all_treasure(board, start, end):
     # print(len(find_min))
     
 
-print(find_all_treasure(board3, start, end))
-start = (5, 0)
-end = (0, 4)
-print(find_all_treasure(board3, start, end))
+# print(find_all_treasure(board3, start, end))
+# start = (5, 0)
+# end = (0, 4)
+# print(find_all_treasure(board3, start, end))
 
 
 
-def can_everywhere(board, start):
+def can_everywhere(board, start, end):
     #count whole zeros
     count_zero=0
     
@@ -100,14 +100,19 @@ def can_everywhere(board, start):
     
     visited = [[0] * X for _ in range(Y)]
 
-    def BFS(y, x):
-        
+    from copy import deepcopy
+
+    def BFS(y, x, dist, track):
+        temp = 0
         q = deque()
-        q.append((y, x))
+        q.append((y, x, dist, track))
         visited[y][x] = 1
-        
+
         while q:
-            cury, curx = q.popleft()
+            cury, curx, cur_dist, cur_track = q.popleft()
+
+            if cury == end[0] and curx == end[1]:
+                return cur_dist, cur_track
             
             for i in range(4):
                 newy = cury+dy[i]
@@ -115,11 +120,17 @@ def can_everywhere(board, start):
                 
                 if 0<=newy<Y and 0<=newx<X:
                     if not visited[newy][newx] and board[newy][newx]!=-1:
-                        q.append((newy, newx))
+                        temp_track = deepcopy(cur_track)
+                        temp_track.append((newy, newx))
+                        q.append((newy, newx, cur_dist+1, temp_track))
                         visited[newy][newx] = 1
+                        temp+=1
                         
-    BFS(start[0], start[1])
-    
+    track = [(start[0], start[1])]
+    print(BFS(start[0], start[1], 0, track))
+    print(visited)
+    return
+
     count_visited = 0
     for row in visited:
         count_visited += sum(row)           
@@ -130,4 +141,4 @@ def can_everywhere(board, start):
     else:
         return False
 
-# print(can_everywhere(board3, start))
+print(can_everywhere(board3, start, end))

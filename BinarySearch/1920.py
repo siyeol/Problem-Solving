@@ -44,3 +44,17 @@ for elem in Marr:
     else:
         print("1")
     
+
+# left = 0
+# right = len(arr)-1
+# while left<=right:
+#     mid = (left+right)//2
+
+#     if arr[mid] == X:
+#         return mid
+    
+#     elif arr[mid] > X:
+#         right = mid-1
+#     else:
+#         left = mid+1
+

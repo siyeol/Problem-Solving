@@ -1,6 +1,6 @@
 class Solution:
     
-    def exist(self, board: List[List[str]], word: str) -> bool:
+    def exist(self, board, word):
         dx = [-1, 1, 0, 0]
         dy = [0, 0, -1, 1]
 

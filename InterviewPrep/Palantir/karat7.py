@@ -25,10 +25,11 @@ from itertools import combinations
 result = dict()
 
 for s1, s2 in combinations(student.keys(), 2):
-    key = "["+s1+", "+s2+"]"
+    key = "[%s, %s]" % (s1, s2)
     result[key] = []
     for course in student[s1]:
         if course in student[s2]:
             result[key].append(course)
 
-print(str(result.items()))
+for key, value in result.items():
+    print(key, ": ", value)
